@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="#" th:action="@{/mensaje}" th:action="*{prueba}" method="post">
+        <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+        <input type="submit" value="Submit">
+    </form>
+
+<h1><span th:text="${camionero.nombre}"></span></h1>
+</body>
+</html>

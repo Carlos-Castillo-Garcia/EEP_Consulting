@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="#" th:action="@{/alta}" th:object="${camionero}" method="post">
+    <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+    <p>Apellidos: <input type="text" th:field="*{apellidos}"/></p>
+    <p>Correo electronico: <input type="text" th:field="*{correo_electronio}"/></p>
+    <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
+    <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
+        Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
+    <p>Transporte de mercancias:<br>
+        Liquida<input type="radio" value="Liquida" th:field="*{transporte}"/>|
+        Pallets<input type="radio" value="Pallets" th:field="*{transporte}"/>|
+        Granel<input type="radio" value="Grenel" th:field="*{transporte}"/>|
+        Gases<input type="radio" value="Gases" th:field="*{transporte}"/>
+    </p>
+    <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
+            No<input type="radio" value="false" th:field="*{contratado}"/></p>
+    <p><textarea th:field="*{comentarios}"></textarea></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
+
+</body>
+</html>
