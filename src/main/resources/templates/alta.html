@@ -12,12 +12,11 @@
     <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
     <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
         Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
-    <p>Transporte de mercancias:<br>
-        Liquida<input type="radio" value="Liquida" th:field="*{transporte}"/>|
-        Pallets<input type="radio" value="Pallets" th:field="*{transporte}"/>|
-        Granel<input type="radio" value="Grenel" th:field="*{transporte}"/>|
-        Gases<input type="radio" value="Gases" th:field="*{transporte}"/>
-    </p>
+    <div>
+        <select th:field="*{transporte}">
+            <option th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
+        </select>
+    </div>
     <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
             No<input type="radio" value="false" th:field="*{contratado}"/></p>
     <p><textarea th:field="*{comentarios}"></textarea></p>

@@ -5,11 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="#" th:action="@{/mensaje}" th:action="*{prueba}" method="post">
-        <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+    <form action="#" th:action="@{/mensajebaja}" method="post">
+        <p>Nombre: <input type="text" th:field="*{camionero}"/></p>
         <input type="submit" value="Submit">
     </form>
 
-<h1><span th:text="${camionero.nombre}"></span></h1>
+<h1><span th:text="${camionero}"></span></h1>
 </body>
 </html>

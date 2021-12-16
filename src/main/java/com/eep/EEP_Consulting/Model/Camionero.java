@@ -7,7 +7,7 @@ public class Camionero {
     String numero_telefono;
     String fecha_nacimiento;
     String genero;
-    String trasnporte;
+    String transporte;
     String comentarios;
     Boolean contratado;
 
@@ -16,14 +16,14 @@ public class Camionero {
 
     public Camionero(String nombre, String apellidos, String correo_electronio,
                      String numero_telefono, String fecha_nacimiento, String genero,
-                     String trasnporte, String comentarios, Boolean contratado) {
+                     String transporte, String comentarios, Boolean contratado) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo_electronio = correo_electronio;
         this.numero_telefono = numero_telefono;
         this.fecha_nacimiento = fecha_nacimiento;
         this.genero = genero;
-        this.trasnporte = trasnporte;
+        this.transporte = transporte;
         this.comentarios = comentarios;
         this.contratado = contratado;
     }
@@ -52,8 +52,8 @@ public class Camionero {
         return genero;
     }
 
-    public String getTrasnporte() {
-        return trasnporte;
+    public String getTransporte() {
+        return transporte;
     }
 
     public String getComentarios() {
@@ -88,8 +88,8 @@ public class Camionero {
         this.genero = genero;
     }
 
-    public void setTrasnporte(String trasnporte) {
-        this.trasnporte = trasnporte;
+    public void setTransporte(String transporte) {
+        this.transporte = transporte;
     }
 
     public void setComentarios(String comentarios) {

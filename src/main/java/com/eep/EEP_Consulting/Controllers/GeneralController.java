@@ -1,35 +1,57 @@
 package com.eep.EEP_Consulting.Controllers;
 
 import com.eep.EEP_Consulting.Model.Camionero;
+import com.eep.EEP_Consulting.Model.Transportes;
+import com.eep.EEP_Consulting.impl.ImplServicios;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+
 @Controller
 public class GeneralController {
 
-    public final String ALTA = "alta";
-    public final String BAJA = "baja";
-    public final String MODIF = "modificaciones";
-    public final String REGISTRO = "registro";
-    public final String MENSAJE = "mensaje_usuarios";
-    public final String LISTADO = "listado";
+    final String ALTA = "alta";
+    final String BAJA = "baja";
+    final String MODIF = "modificaciones";
+    final String REGISTRO = "registro";
+    final String MENSAJE = "mensaje_usuarios";
+    final String LISTADO = "listado";
 
-    @RequestMapping(value = "/alta", method = RequestMethod.GET)
-    public String daralta(Model model){
+    @Autowired
+    @Qualifier("ServiciosDatos")
+    private ImplServicios servicio;
+
+    @GetMapping("/alta")
+    public String altaget(Model model){
         model.addAttribute("camionero", new Camionero());
         return ALTA;
     }
 
-    @RequestMapping(value = "/baja", method = RequestMethod.GET)
+    @PostMapping("/mensajealta")
+    public String altapost(@ModelAttribute Camionero camionero, Model model){
+        return MENSAJE;
+    }
+
+    @GetMapping("/baja")
     public String nombrebaja(Model model){
-        model.addAttribute("prueba", new Camionero());
+        model.addAttribute("camionero", new Camionero());
+        model.addAttribute("valoresTransporte", Transportes.values());
         return BAJA;
     }
 
-    @RequestMapping(value = "/bajapost", method = RequestMethod.POST)
-    public String darbaja(@ModelAttribute Camionero camionero, Model model){
-        model.addAttribute("camionero", camionero);
+    @PostMapping("/mensajebaja")
+    public String darbaja(@ModelAttribute String nombre, Model model){
+        model.addAttribute("camionero", nombre);
         return BAJA;
+    }
+
+    @GetMapping("/listado")
+    public String listado() throws FileNotFoundException {
+        servicio.ListarCamioneros();
+        return LISTADO;
     }
 }
