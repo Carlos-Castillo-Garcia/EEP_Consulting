@@ -5,9 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="#" th:action="@{/mensajebaja}" method="post">
-        <p>Nombre: <input type="text" th:field="*{camionero}"/></p>
-        <input type="submit" value="Submit">
+    <form action="#" th:action="@{/mensajebaja}" th:object="${camionero}" method="post">
+        <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+        <p><input type="submit" value="Submit"/></p>
     </form>
 
 <h1><span th:text="${camionero}"></span></h1>

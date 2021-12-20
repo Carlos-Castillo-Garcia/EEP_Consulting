@@ -28,30 +28,34 @@ public class GeneralController {
     @GetMapping("/alta")
     public String altaget(Model model){
         model.addAttribute("camionero", new Camionero());
+        model.addAttribute("valoresTransporte", Transportes.values());
         return ALTA;
     }
 
     @PostMapping("/mensajealta")
     public String altapost(@ModelAttribute Camionero camionero, Model model){
+        model.addAttribute("mensaje", servicio.GuardarCamionero(camionero));
         return MENSAJE;
     }
 
     @GetMapping("/baja")
     public String nombrebaja(Model model){
         model.addAttribute("camionero", new Camionero());
-        model.addAttribute("valoresTransporte", Transportes.values());
         return BAJA;
     }
 
     @PostMapping("/mensajebaja")
-    public String darbaja(@ModelAttribute String nombre, Model model){
-        model.addAttribute("camionero", nombre);
-        return BAJA;
+    public String darbaja(@ModelAttribute Camionero nombre, Model model){
+        servicio.BajaCamioneros(nombre);
+        model.addAttribute("mensaje", "Camionero Borrado");
+        return MENSAJE;
     }
 
     @GetMapping("/listado")
-    public String listado() throws FileNotFoundException {
-        servicio.ListarCamioneros();
+    public String listado(Model model) {
+        model.addAttribute("Camionero", servicio.ListarCamioneros());
+
         return LISTADO;
     }
+
 }

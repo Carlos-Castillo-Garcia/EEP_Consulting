@@ -9,14 +9,14 @@ public class Camionero {
     String genero;
     String transporte;
     String comentarios;
-    Boolean contratado;
+    String contratado;
 
     public Camionero() {
     }
 
     public Camionero(String nombre, String apellidos, String correo_electronio,
                      String numero_telefono, String fecha_nacimiento, String genero,
-                     String transporte, String comentarios, Boolean contratado) {
+                     String transporte, String comentarios, String contratado) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo_electronio = correo_electronio;
@@ -60,7 +60,7 @@ public class Camionero {
         return comentarios;
     }
 
-    public Boolean getContratado() {
+    public String getContratado() {
         return contratado;
     }
 
@@ -96,7 +96,22 @@ public class Camionero {
         this.comentarios = comentarios;
     }
 
-    public void setContratado(Boolean contratado) {
+    public void setContratado(String contratado) {
         this.contratado = contratado;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(nombre).append("#");
+        sb.append(apellidos).append("#");
+        sb.append(correo_electronio).append("#");
+        sb.append(numero_telefono).append("#");
+        sb.append(fecha_nacimiento).append("#");
+        sb.append(genero).append("#");
+        sb.append(transporte).append("#");
+        sb.append(comentarios).append("#");
+        sb.append(contratado).append("#");
+        return sb.toString();
     }
 }
