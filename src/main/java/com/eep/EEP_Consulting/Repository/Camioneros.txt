@@ -1,2 +1,5 @@
-prueba#prubea#prubea#prubea#prubea#prubea#prubea#prubea#prubea#
-prueba#prubea#prubea#prubea#prubea#prubea#prubea#prubea#prubea#
+prueba1#prueba1#prueba1#123#2021-12-08#Hombre#Pallets#prueba1#true#nullnull
+Prueba2#Prueba2#Prueba2#1324#2021-12-03#Mujer#Pallets#Prueba2#true#nullnull
+Prueba3#Prueba3#Prueba3#123445647#2021-12-09#Mujer#Gases#Prueba3#true#nullnull
+Prueba5#Prueba5#Prueba5#97846513#2021-12-09#Hombre#Liquidas#Prueba5#true#nullnull
+Prueba6#Prueba6#Prueba6#98465#2021-12-17#Mujer#Granel#Prueba6#true#nullnull

@@ -5,20 +5,39 @@
     <title>Title</title>
 </head>
 <body>
-<form action="#" th:action="@{/alta}" th:object="${camionero}" method="post">
+<form action="#" th:action="@{/mensajealta}" th:object="${camionero}" method="post">
+
+    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" style="color: red"></span><br />
     <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+
+    <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{nombre}" style="color: red"></span><br />
     <p>Apellidos: <input type="text" th:field="*{apellidos}"/></p>
+
+    <span th:if="${#fields.hasErrors('correo_electronio')}" th:errors="*{nombre}" style="color: red"></span><br />
     <p>Correo electronico: <input type="text" th:field="*{correo_electronio}"/></p>
+
+    <span th:if="${#fields.hasErrors('numero_telefono')}" th:errors="*{nombre}" style="color: red"></span><br />
+    <p>Numero de Telefono: <input type="text" th:field="*{numero_telefono}"></p>
+
+    <span th:if="${#fields.hasErrors('fecha_nacimiento')}" th:errors="*{nombre}" style="color: red"></span><br />
     <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
+
+    <span th:if="${#fields.hasErrors('genero')}" th:errors="*{nombre}" style="color: red"></span><br />
     <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
         Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
+
+
     <div>
         <select th:field="*{transporte}">
             <option th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
         </select>
     </div>
+
+
     <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
             No<input type="radio" value="false" th:field="*{contratado}"/></p>
+
+
     <p><textarea th:field="*{comentarios}"></textarea></p>
     <p><input type="submit" value="Submit"/></p>
 </form>

@@ -28,30 +28,47 @@ public class GeneralController {
     @GetMapping("/alta")
     public String altaget(Model model){
         model.addAttribute("camionero", new Camionero());
+        model.addAttribute("valoresTransporte", Transportes.values());
         return ALTA;
     }
 
     @PostMapping("/mensajealta")
     public String altapost(@ModelAttribute Camionero camionero, Model model){
+        model.addAttribute("mensaje", "hola");
         return MENSAJE;
     }
 
     @GetMapping("/baja")
     public String nombrebaja(Model model){
         model.addAttribute("camionero", new Camionero());
-        model.addAttribute("valoresTransporte", Transportes.values());
         return BAJA;
     }
 
     @PostMapping("/mensajebaja")
-    public String darbaja(@ModelAttribute String nombre, Model model){
-        model.addAttribute("camionero", nombre);
-        return BAJA;
+    public String darbaja(@ModelAttribute Camionero nombre, Model model){
+//        servicio.BajaCamioneros(nombre);
+        model.addAttribute("mensaje", "Camionero Borrado");
+        return MENSAJE;
     }
 
     @GetMapping("/listado")
-    public String listado() throws FileNotFoundException {
-        servicio.ListarCamioneros();
+    public String listado(Model model) throws FileNotFoundException {
+        model.addAttribute("Camionero", servicio.ListarCamioneros());
+
         return LISTADO;
+    }
+
+    @GetMapping("/modificacion")
+    public String modificacion(Model model){
+        model.addAttribute("busqueda", new Camionero());
+        model.addAttribute("mods", new Camionero());
+        return MENSAJE;
+    }
+
+    @PostMapping("/mesajemods")
+    public String modificaciones(@ModelAttribute Camionero busqueda, @ModelAttribute Camionero mods, Model model){
+//        servicio.ModificacionCamioneros(busqueda, mods);
+        model.addAttribute("mensaje", "Camionero Modificado");
+        return MENSAJE;
     }
 }

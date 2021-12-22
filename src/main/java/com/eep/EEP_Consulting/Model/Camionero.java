@@ -1,22 +1,46 @@
 package com.eep.EEP_Consulting.Model;
 
+import javax.validation.constraints.*;
+
 public class Camionero {
+
+    @NotNull(message = "El nombre no puede estar vacio")
+    @Size(min = 20)
     String nombre;
+
+    @NotNull(message = "El apellido no puede estar vacio")
+    @Size(min = 20)
     String apellidos;
+
+    @NotNull(message = "El correo no puede estar vacio")
+    @Email(message = "El correo no es valido")
     String correo_electronio;
+
+    @NotNull(message = "El numero de telefono no puede estar vacio")
+    @Size(min = 9, max = 9)
     String numero_telefono;
+
+    @NotNull(message = "La fecha de nacimiento no puede estar vacio")
     String fecha_nacimiento;
+
+    @NotNull(message = "Seleccione un genero")
+    
     String genero;
+
+    @NotNull(message = "Seleccione un transporte")
     String transporte;
+
     String comentarios;
-    Boolean contratado;
+
+    @NotNull(message = "Seleccione si esta contradato o no")
+    String contratado;
 
     public Camionero() {
     }
 
     public Camionero(String nombre, String apellidos, String correo_electronio,
                      String numero_telefono, String fecha_nacimiento, String genero,
-                     String transporte, String comentarios, Boolean contratado) {
+                     String transporte, String comentarios, String contratado) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo_electronio = correo_electronio;
@@ -60,7 +84,7 @@ public class Camionero {
         return comentarios;
     }
 
-    public Boolean getContratado() {
+    public String getContratado() {
         return contratado;
     }
 
@@ -96,7 +120,22 @@ public class Camionero {
         this.comentarios = comentarios;
     }
 
-    public void setContratado(Boolean contratado) {
+    public void setContratado(String contratado) {
         this.contratado = contratado;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(nombre).append("#");
+        sb.append(apellidos).append("#");
+        sb.append(correo_electronio).append("#");
+        sb.append(numero_telefono).append("#");
+        sb.append(fecha_nacimiento).append("#");
+        sb.append(genero).append("#");
+        sb.append(transporte).append("#");
+        sb.append(comentarios).append("#");
+        sb.append(contratado).append("#");
+        return sb.toString();
     }
 }
