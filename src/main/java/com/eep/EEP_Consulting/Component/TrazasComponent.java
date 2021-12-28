@@ -17,13 +17,13 @@ public class TrazasComponent {
 
     public void test(List<Camionero> test){
         for (int i = 0; i < test.size(); i++){
-            System.out.println(test.get(i).getNombre() + test.get(i).getApellidos()+ test.get(i).getCorreo_electronio()+
+            System.out.println(test.get(i).getNombre() + test.get(i).getApellidos()+ test.get(i).getCorreo_electronico()+
                     test.get(i).getNumero_telefono()+test.get(i).getFecha_nacimiento()+ test.get(i).getGenero()+
                     test.get(i).getTransporte()+ test.get(i).getComentarios()+ test.get(i).getContratado());
         }
     }
 
-    public void errores(String texto){
+    public String errores(String texto){
         File log = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
@@ -38,9 +38,10 @@ public class TrazasComponent {
             LOG.error("Error en la creacion del BufferWriter de los log");
         }
         LOG.error(texto);
+        return texto;
     }
 
-    public void info(String texto){
+    public String info(String texto){
         File log = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
@@ -55,5 +56,6 @@ public class TrazasComponent {
             LOG.info("Error en la creacion del BufferWriter de los log");
         }
         LOG.info(texto);
+        return texto;
     }
 }

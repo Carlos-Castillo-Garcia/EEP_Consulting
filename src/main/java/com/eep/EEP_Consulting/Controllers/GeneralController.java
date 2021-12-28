@@ -1,5 +1,6 @@
 package com.eep.EEP_Consulting.Controllers;
 
+import com.eep.EEP_Consulting.Component.TrazasComponent;
 import com.eep.EEP_Consulting.Model.Camionero;
 import com.eep.EEP_Consulting.Model.Transportes;
 import com.eep.EEP_Consulting.impl.ImplServicios;
@@ -7,16 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 @Controller
 public class GeneralController {
 
     final String ALTA = "alta";
     final String BAJA = "baja";
-    final String MODIF = "modificaciones";
+    final String MODIF = "modificacion";
     final String REGISTRO = "registro";
     final String MENSAJE = "mensaje_usuarios";
     final String LISTADO = "listado";
@@ -24,6 +27,10 @@ public class GeneralController {
     @Autowired
     @Qualifier("ServiciosDatos")
     private ImplServicios servicio;
+
+    @Autowired
+    @Qualifier("TrazasComponent")
+    private TrazasComponent componente;
 
     @GetMapping("/alta")
     public String altaget(Model model){
@@ -33,9 +40,16 @@ public class GeneralController {
     }
 
     @PostMapping("/mensajealta")
-    public String altapost(@ModelAttribute Camionero camionero, Model model){
-        model.addAttribute("mensaje", "hola");
-        return MENSAJE;
+    public String altapost(Model model, @Validated Camionero camionero, BindingResult result){
+        if(result.hasErrors()){
+            model.addAttribute("valoresTransporte", Transportes.values());
+            return ALTA;
+        }else {
+            ArrayList<Camionero> camionero_guardar = new ArrayList();
+            camionero_guardar.add(camionero);
+            model.addAttribute("mensaje", servicio.GuardarCamionero(camionero_guardar));
+            return MENSAJE;
+        }
     }
 
     @GetMapping("/baja")
@@ -46,29 +60,30 @@ public class GeneralController {
 
     @PostMapping("/mensajebaja")
     public String darbaja(@ModelAttribute Camionero nombre, Model model){
-//        servicio.BajaCamioneros(nombre);
-        model.addAttribute("mensaje", "Camionero Borrado");
+        model.addAttribute("mensaje", servicio.BajaCamionerosrepes(nombre));
         return MENSAJE;
     }
 
     @GetMapping("/listado")
     public String listado(Model model) throws FileNotFoundException {
         model.addAttribute("Camionero", servicio.ListarCamioneros());
-
         return LISTADO;
     }
 
     @GetMapping("/modificacion")
     public String modificacion(Model model){
-        model.addAttribute("busqueda", new Camionero());
+        model.addAttribute("valoresTransporte", Transportes.values());
         model.addAttribute("mods", new Camionero());
-        return MENSAJE;
+        return MODIF;
     }
 
     @PostMapping("/mesajemods")
-    public String modificaciones(@ModelAttribute Camionero busqueda, @ModelAttribute Camionero mods, Model model){
-//        servicio.ModificacionCamioneros(busqueda, mods);
-        model.addAttribute("mensaje", "Camionero Modificado");
+    public String modificaciones(@RequestParam(value = "busqueda") String nombre, @ModelAttribute Camionero mods, Model model){
+        if (nombre == null || nombre.isEmpty()) {
+            model.addAttribute("mensaje",componente.errores("El nombre a buscar no puede estar vacio"));
+        }else {
+            model.addAttribute("mensaje", servicio.ModificacionCamioneros(nombre, mods));
+        }
         return MENSAJE;
     }
 }

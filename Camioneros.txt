@@ -1,8 +1,0 @@
-nombre1#apellidos1#correo1#numero1#fecha1#genero1#transporte1#comentario1#falsenull
-nombre2#apellidos2#correo2#numero2#fecha2#genero2#transporte2#comentario2#truenull
-nombre3#apellidos3#correo3#numero3#fecha3#genero3#transporte3#comentario3#falsenull
-nombre3#apellidos3#correo3#numero3#fecha3#genero3#transporte3#comentario3#falsenull
-asd#asds#a#null#2021-12-09#Hombre#Granel#ads#true#null
-asd#asds#asd#null#2021-12-09#Hombre#Granel#ads#true#null
-asd#asd#asd#6164641#2021-12-10#Hombre#Gases##true#null
-asd#asd#asd#123#2021-12-08#Hombre#Granel#asd#true#null

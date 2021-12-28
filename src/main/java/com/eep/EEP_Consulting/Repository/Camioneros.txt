@@ -1,5 +1,6 @@
-prueba1#prueba1#prueba1#123#2021-12-08#Hombre#Pallets#prueba1#true#nullnull
-Prueba2#Prueba2#Prueba2#1324#2021-12-03#Mujer#Pallets#Prueba2#true#nullnull
-Prueba3#Prueba3#Prueba3#123445647#2021-12-09#Mujer#Gases#Prueba3#true#nullnull
-Prueba5#Prueba5#Prueba5#97846513#2021-12-09#Hombre#Liquidas#Prueba5#true#nullnull
-Prueba6#Prueba6#Prueba6#98465#2021-12-17#Mujer#Granel#Prueba6#true#nullnull
+1#prueba1#null#null#null#null#null#null#null#null#
+2#prueba3#prueba3#prueba3#234324#2021-12-02#Mujer#Pallets#prueba3#false#
+3#prueba2#prueba2#prueba2#2345235#2021-12-17#Mujer#Granel#aprueba2#true#
+4#prueba4#prueba4#prueba4#12345#2021-12-17#Mujer#Granel#prueba4#true#
+6#Manuel#Castillo Garcia#prueba@prueba.com#879546213#2021-12-23#Hombre#Granel#prueba#true#
+7#Manuel#Castillo Garcia#prueba@prueba.com#879546213#2021-12-02#Mujer#Gases#prubea#true#

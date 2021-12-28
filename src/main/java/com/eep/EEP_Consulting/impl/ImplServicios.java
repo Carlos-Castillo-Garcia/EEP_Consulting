@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 @Service("ServiciosDatos")
 public class ImplServicios implements DatosService {
     File archivo = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Camioneros.txt");
+    ArrayList <Camionero> datos = new ArrayList();
 
     @Autowired
     @Qualifier("TrazasComponent")
@@ -30,8 +32,8 @@ public class ImplServicios implements DatosService {
             br = new BufferedReader(fr);
             while ((contenido = br.readLine()) != null) {
                 String[] camioneros = contenido.split("#");
-                Camionero test = new Camionero(camioneros[0], camioneros[1], camioneros[2],
-                        camioneros[3], camioneros[4], camioneros[5], camioneros[6], camioneros[7], camioneros[8]);
+                Camionero test = new Camionero(Integer.parseInt(camioneros[0]), camioneros[1], camioneros[2], camioneros[3],
+                        camioneros[4], camioneros[5], camioneros[6], camioneros[7], camioneros[8], camioneros[9]);
                 camionerolist.add(test);
             }
         } catch (FileNotFoundException e) {
@@ -46,153 +48,97 @@ public class ImplServicios implements DatosService {
                 trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader de la lectura de los Camioneros");
             }
         }
-        trazasComponent.test(camionerolist);
         return camionerolist;
     }
 
-    //volver a pensar la forma de hacer el guardado, borrado y modificacion de registros utilizando un array
-//    @Override
-//    public String GuardarCamionero(Camionero camionero) {
-//        try {
-//            BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true));
-//            String texto = camionero.toString();
-//            bw.write(texto + "\n");
-//            try {
-//                bw.close();
-//            } catch (IOException e) {
-//                trazasComponent.errores("Error en el cierre del BufferWriter del guardado de los Camioneros");
-//            }
-//        } catch (IOException e) {
-//            trazasComponent.errores("Error en el creado del BufferWriter del guardado de los Camioneros");
-//        }
-//        return "Camionero Guardado";
-//    }
-//
-//    @Override
-//    public String BajaCamioneros(Camionero nombre) {
-//        FileReader fr = null;
-//        BufferedReader br = null;
-//        String contenido;
-//        String lineToRemove = "";
-//        File outputFile = new File(archivo.getAbsolutePath()+".temp");
-//
-//        try {
-//            fr = new FileReader(archivo);
-//            br = new BufferedReader(fr);
-//            while ((contenido = br.readLine()) != null) {
-//                String[] camioneros = contenido.split("#");
-//                Camionero test = new Camionero(camioneros[0], camioneros[1], camioneros[2],
-//                        camioneros[3], camioneros[4], camioneros[5], camioneros[6], camioneros[7], camioneros[8]);
-//                if(test.getNombre().equals(nombre.getNombre())){
-//                    lineToRemove = test.toString();
-//                    break;
-//                }
-//            }
-//        } catch (FileNotFoundException e) {
-//            trazasComponent.errores("Archivo no encontrado");
-//        } catch (IOException e) {
-//            trazasComponent.errores("Lectura del Archivo incorrecta");
-//        } finally {
-//            try {
-//                fr.close();
-//                br.close();
-//            } catch (IOException e) {
-//                trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader del borrado de Camioneros");
-//            }
-//        }
-//
-//        try {
-//            BufferedReader reader = new BufferedReader(new FileReader(archivo));
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
-//            String currentLine;
-//            while((currentLine = reader.readLine()) != null) {
-//                if(currentLine.trim().equals(lineToRemove)){
-//                    continue;
-//                }
-//                writer.write(currentLine + System.getProperty("#") + "\n");
-//            }
-//            writer.close();
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (archivo.delete()) {
-//            trazasComponent.info("El fichero ha sido borrado satisfactoriamente");
-//        }else {
-//            trazasComponent.errores("El fichero no puede ser borrado");
-//        }
-//
-//        if(outputFile.renameTo(new File(archivo.getAbsolutePath()))) {
-//            trazasComponent.info("El fichero a sido renombrado satisfactoriamente");
-//        }else{
-//            trazasComponent.errores("El fichero no a sido renombrado satisfactoriamente");
-//        }
-//        return "Camionero dado de baja";
-//}
-//
-//    @Override
-//    public String ModificacionCamioneros(Camionero busqueda, Camionero modificado) {
-//        Camionero mods = new Camionero();
-//        FileReader fr = null;
-//        BufferedReader br = null;
-//        String contenido;
-//        File outputFile = new File(archivo.getAbsolutePath()+".temp");
-//
-//        try {
-//            fr = new FileReader(archivo);
-//            br = new BufferedReader(fr);
-//            while ((contenido = br.readLine()) != null) {
-//                String[] camioneros = contenido.split("#");
-//                Camionero test = new Camionero(camioneros[0], camioneros[1], camioneros[2],
-//                        camioneros[3], camioneros[4], camioneros[5], camioneros[6], camioneros[7], camioneros[8]);
-//                if(test.getNombre().equals(busqueda.getNombre())){
-//                    mods = test;
-//                    break;
-//                }
-//            }
-//        } catch (FileNotFoundException e) {
-//            trazasComponent.errores("Archivo no encontrado");
-//        } catch (IOException e) {
-//            trazasComponent.errores("Lectura del Archivo incorrecta");
-//        } finally {
-//            try {
-//                fr.close();
-//                br.close();
-//            } catch (IOException e) {
-//                trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader del borrado de Camioneros");
-//            }
-//        }
-//
-//        mods = modificado;
-//
-//        try {
-//            BufferedReader reader = new BufferedReader(new FileReader(archivo));
-//            BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile));
-//            String currentLine;
-//            while((currentLine = reader.readLine()) != null) {
-//                writer.write(currentLine + System.getProperty("#")+"\n");
-//            }
-//            writer.close();
-//            reader.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (archivo.delete()) {
-//            trazasComponent.info("El fichero ha sido borrado satisfactoriamente");
-//        }else {
-//            trazasComponent.errores("El fichero no puede ser borrado");
-//        }
-//
-//        if(outputFile.renameTo(new File(archivo.getAbsolutePath()))) {
-//            trazasComponent.info("El fichero a sido renombrado satisfactoriamente");
-//        }else{
-//            trazasComponent.errores("El fichero no a sido renombrado satisfactoriamente");
-//        }
-//
-//        return "Camionero Modificado";
-//    }
+    @Override
+    public String GuardarCamionero(ArrayList<Camionero> lista_datos) {
+        BufferedWriter bw;
+        int ultimo_id = ListarCamioneros().get(ListarCamioneros().size() - 1).getid();
+        int nuevo_id = ultimo_id+1;
+        lista_datos.get(0).setId(nuevo_id);
+        try {
+            bw = new BufferedWriter(new FileWriter(archivo, true));
+            for (int i = 0; i < lista_datos.size();i++){
+                String datos = lista_datos.get(i).toString();
+                bw.write(datos + "\n");
+            }
+            bw.close();
+        } catch (IOException e) {
+            trazasComponent.errores("Error en el creado del BufferWriter del guardado de los Camioneros");
+        }
+        return "Camionero guardado con exito";
+    }
 
+    public String GuardarCamionero_BM(ArrayList<Camionero> lista_datos) {
+        BufferedWriter bw;
+        try {
+            bw = new BufferedWriter(new FileWriter(archivo));
+            for (int i = 0; i < lista_datos.size();i++){
+                String datos = lista_datos.get(i).toString();
+                bw.write(datos + "\n");
+            }
+            bw.close();
+        } catch (IOException e) {
+            trazasComponent.errores("Error en el creado del BufferWriter del guardado de los Camioneros");
+        }
+        return "Camionero guardado con exito";
+    }
 
+    @Override
+    public String BajaCamioneros(Camionero nombre) {
+        BufferedWriter bw;
+        datos = (ArrayList<Camionero>) this.ListarCamioneros();
+        for (int i = 0; i < datos.size(); i++){
+            if(datos.get(i).getNombre().equals(nombre.getNombre())){
+                datos.remove(i);
+                break;
+            }
+        }
+        this.GuardarCamionero_BM(datos);
+        return "Camionero dado de baja";
+    }
+
+    @Override
+    public String ModificacionCamioneros(String nombre, Camionero modificado) {
+        this.datos = (ArrayList<Camionero>) this.ListarCamioneros();
+        Camionero antiguo = new Camionero();
+        for (int i = 0; i < datos.size(); i++){
+            if(datos.get(i).getNombre().equals(nombre)){
+                antiguo = datos.get(i);
+                datos.get(i).setId(modificado.getid());
+                datos.get(i).setNombre(modificado.getNombre());
+                datos.get(i).setApellidos(modificado.getApellidos());
+                datos.get(i).setCorreo_electronico(modificado.getCorreo_electronico());
+                datos.get(i).setNumero_telefono(modificado.getNumero_telefono());
+                datos.get(i).setFecha_nacimiento(modificado.getFecha_nacimiento());
+                datos.get(i).setGenero(modificado.getGenero());
+                datos.get(i).setTransporte(modificado.getTransporte());
+                datos.get(i).setComentarios(modificado.getComentarios());
+                datos.get(i).setContratado(modificado.getContratado());
+                break;
+            }
+        }
+        this.GuardarCamionero_BM(datos);
+        return "Camionero modificado";
+    }
+
+    public String BajaCamionerosrepes(Camionero nombre) {
+        ArrayList<Camionero> repes = new ArrayList();
+        BufferedWriter bw;
+        datos = (ArrayList<Camionero>) this.ListarCamioneros();
+        for (int i = 0; i < datos.size(); i++){
+            if(datos.get(i).getNombre().equals(nombre.getNombre())){
+                repes.add(datos.get(i));
+
+            }
+        }
+        for (int j = 1; j < repes.size(); j++){
+            if (repes.get(0).getNombre().equals(repes.get(j).getNombre())){
+                break;
+            }
+        }
+        //this.GuardarCamionero_BM(datos);
+        return repes.toString();
+    }
 }
