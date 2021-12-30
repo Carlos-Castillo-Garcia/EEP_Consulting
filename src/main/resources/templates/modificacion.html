@@ -5,29 +5,24 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Buscador</h2>
-    <form action="#" th:action="@{/mesajemods}" method="post">
-        <p>Nombre: <input type="text" th:name="busqueda"/></p>
-
 <h2>Campos a modificar</h2>
-        <div th:object="${mods}">
-                <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
-                <p>Apellidos: <input type="text" th:field="*{apellidos}"/></p>
-                <p>Correo electronico: <input type="text" th:field="*{correo_electronico}"/></p>
-                <p>Numero de Telefono: <input type="number" th:field="*{numero_telefono}"></p>
-                <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
-                <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
-                    Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
-                <div>
-                    <select th:field="*{transporte}">
-                        <option th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
-                    </select>
-                </div>
-                <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
-                    No<input type="radio" value="false" th:field="*{contratado}"/></p>
-                <p><textarea th:field="*{comentarios}"></textarea></p>
-        </div>
-        <p><input type="submit" value="Submit"/></p>
-    </form>
+<form action="#" th:action="@{/mesajemods}" th:object="${mods}" method="post">
+    <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
+    <p>Apellidos: <input type="text" th:field="*{apellidos}"/></p>
+    <p>Correo electronico: <input type="text" th:field="*{correo_electronico}"/></p>
+    <p>Numero de Telefono: <input type="number" th:field="*{numero_telefono}"></p>
+    <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
+    <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
+        Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
+    <div>
+        <select th:field="*{transporte}">
+            <option th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
+        </select>
+    </div>
+    <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
+        No<input type="radio" value="false" th:field="*{contratado}"/></p>
+    <p><textarea th:field="*{comentarios}"></textarea></p>
+    <p><input type="submit" value="Submit"/></p>
+</form>
 </body>
 </html>

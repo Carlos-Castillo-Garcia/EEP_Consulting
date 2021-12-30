@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-
+    <h1>Busque de Camioneros</h1>
+    <form action="#" th:action="@{/busqueda}" method="post">
+        <p>Nombre: <input type="text" th:name="busqueda"/></p>
+        <p>Dar de baja un camionero<input type="radio" value="true" th:name="eleccion"/> <br>
+           Modificar un camionero <input type="radio" value="false" th:name="eleccion"/></p>
+        <p><input type="submit" value="Submit"/></p>
+    </form>
 </body>
 </html>

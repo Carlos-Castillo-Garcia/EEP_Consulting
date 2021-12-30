@@ -86,11 +86,11 @@ public class ImplServicios implements DatosService {
     }
 
     @Override
-    public String BajaCamioneros(Camionero nombre) {
+    public String BajaCamioneros(String nombre) {
         BufferedWriter bw;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
         for (int i = 0; i < datos.size(); i++){
-            if(datos.get(i).getNombre().equals(nombre.getNombre())){
+            if(datos.get(i).getNombre().equals(nombre)){
                 datos.remove(i);
                 break;
             }
@@ -100,13 +100,12 @@ public class ImplServicios implements DatosService {
     }
 
     @Override
-    public String ModificacionCamioneros(String nombre, Camionero modificado) {
+    public String ModificacionCamioneros(Camionero nombre, Camionero modificado) {
         this.datos = (ArrayList<Camionero>) this.ListarCamioneros();
         Camionero antiguo = new Camionero();
         for (int i = 0; i < datos.size(); i++){
-            if(datos.get(i).getNombre().equals(nombre)){
+            if(datos.get(i).getNombre().equals(nombre.getNombre())){
                 antiguo = datos.get(i);
-                datos.get(i).setId(modificado.getid());
                 datos.get(i).setNombre(modificado.getNombre());
                 datos.get(i).setApellidos(modificado.getApellidos());
                 datos.get(i).setCorreo_electronico(modificado.getCorreo_electronico());
@@ -123,14 +122,13 @@ public class ImplServicios implements DatosService {
         return "Camionero modificado";
     }
 
-    public String BajaCamionerosrepes(Camionero nombre) {
-        ArrayList<Camionero> repes = new ArrayList();
+    public List<Camionero> BusquedaCamionerosrepes(String nombre) {
+        List<Camionero> repes = new ArrayList();
         BufferedWriter bw;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
         for (int i = 0; i < datos.size(); i++){
-            if(datos.get(i).getNombre().equals(nombre.getNombre())){
+            if(datos.get(i).getNombre().equals(nombre)){
                 repes.add(datos.get(i));
-
             }
         }
         for (int j = 1; j < repes.size(); j++){
@@ -138,7 +136,6 @@ public class ImplServicios implements DatosService {
                 break;
             }
         }
-        //this.GuardarCamionero_BM(datos);
-        return repes.toString();
+        return repes;
     }
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{../static/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form action="#" th:action="@{/postlistado}" method="post">
+            <table class="table table-dark">
+                <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Correo electronico</th>
+                    <th>Numero de telefono</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Genero</th>
+                    <th>Transporte</th>
+                    <th>Comentario</th>
+                    <th>Contratado</th>
+                </tr>
+                </thead>
+                <tr th:each="i, iterator : ${Camionero}">
+                    <td><span style="text-align: center" th:text="*{i.nombre}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.apellidos}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.correo_electronico}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.numero_telefono}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.fecha_nacimiento}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.genero}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.transporte}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.comentarios}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.contratado}"></span></td>
+
+                    <td><input type="radio" th:value="${iterator.index}" th:name="seleccion"></td>
+                </tr>
+            </table>
+                <p><input type="submit" value="Submit"></p>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:src="@{../static/js/jquery-3.6.0.min.js}"></script>
+<script th:src="@{../static/js/popper.min.js}"></script>
+<script th:src="@{../static/js/bootstrap.min.js}"></script>
+</body>
+</html>
