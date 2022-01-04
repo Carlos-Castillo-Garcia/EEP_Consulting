@@ -1,6 +1,6 @@
 1#prueba1#null#null#null#null#null#null#null#null#
 2#prueba2#prueba2#prueba2@prueba2.com#879546213#2021-12-16#Hombre#Pallets#prueba2#false#
-4#prueba4#prueba4#prueba4#12345#2021-12-17#Mujer#Granel#prueba4#true#
-6#Manuel#Castillo Garcia#prueba@prueba.com#879546213#2021-12-01#Hombre#Liquidas#prueba#false#
-7#Manuel#Castillo Garcia#prueba@prueba.com#879546213#2021-12-02#Mujer#Gases#prubea#true#
-
+4#prueba3#prueba3#prueba3@prueba3.com#456123789#2021-12-10#Mujer#Granel#prueba3#true#
+5#Manuel#Castillo Garcia#Manuel@manuel.com#978456231#2021-12-01#Hombre#Granel#Manuel#true#
+6#Carlos#Castillo Garcia#carlos@carlos.com#465123978#2021-12-02#Hombre#Granel#carlos#true#
+7#Julian#Castillo Lopez#prueba@prueba.com#654789321#1994-05-16#Hombre#Granel#prueba#true#

@@ -43,6 +43,21 @@ public class GeneralController {
         return LISTADO;
     }
 
+    @PostMapping("/postlistado")
+    public String postlistado(@RequestParam(value = "seleccion") int seleccion, Model model){
+        ArrayList<Camionero> listado = (ArrayList<Camionero>) servicio.BusquedaCamionerosrepes(nombre_busqueda);
+        camionero_busqueda = listado.get(seleccion);
+        if(eleccion_busqueda.equals("true")){
+            model.addAttribute("mensaje", servicio.BajaCamionerosId(camionero_busqueda.getid()));
+            return MENSAJE;
+        }else if(eleccion_busqueda.equals("false")){
+            model.addAttribute("mods", new Camionero());
+            model.addAttribute("valoresTransporte", Transportes.values());
+            return MODIF;
+        }
+        return null;
+    }
+
     @GetMapping("/busqueda")
     public String busqueda_camioneros(){
         return BUSQUEDA;
@@ -97,18 +112,9 @@ public class GeneralController {
         return MENSAJE;
     }
 
-    @PostMapping("/postlistado")
-    public String postlistado(@RequestParam(value = "seleccion") String seleccion, Model model){
-        ArrayList<Camionero> listado = (ArrayList<Camionero>) servicio.BusquedaCamionerosrepes(nombre_busqueda);
-        camionero_busqueda = listado.get(Integer.parseInt(seleccion));
-        if(eleccion_busqueda.equals("true")){
-            model.addAttribute("mensaje", servicio.BajaCamioneros(camionero_busqueda.getNombre()));
-            return MENSAJE;
-        }else if(eleccion_busqueda.equals("false")){
-            model.addAttribute("mods", new Camionero());
-            model.addAttribute("valoresTransporte", Transportes.values());
-            return MODIF;
-        }
-        return null;
+    @PostMapping("/registro")
+    public String registro(Model model){
+        model.addAttribute("registro", servicio.RegistroOperaciones());
+        return REGISTRO;
     }
 }

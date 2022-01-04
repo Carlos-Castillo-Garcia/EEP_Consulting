@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("ServiciosDatos")
 public class ImplServicios implements DatosService {
-    File archivo = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Camioneros.txt");
+    File archivoCamioneros = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Camioneros.txt");
+    File archivoLog = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
     ArrayList <Camionero> datos = new ArrayList();
 
     @Autowired
@@ -28,7 +28,7 @@ public class ImplServicios implements DatosService {
         BufferedReader br = null;
         String contenido;
         try {
-            fr = new FileReader(archivo);
+            fr = new FileReader(archivoCamioneros);
             br = new BufferedReader(fr);
             while ((contenido = br.readLine()) != null) {
                 String[] camioneros = contenido.split("#");
@@ -58,7 +58,7 @@ public class ImplServicios implements DatosService {
         int nuevo_id = ultimo_id+1;
         lista_datos.get(0).setId(nuevo_id);
         try {
-            bw = new BufferedWriter(new FileWriter(archivo, true));
+            bw = new BufferedWriter(new FileWriter(archivoCamioneros, true));
             for (int i = 0; i < lista_datos.size();i++){
                 String datos = lista_datos.get(i).toString();
                 bw.write(datos + "\n");
@@ -70,10 +70,11 @@ public class ImplServicios implements DatosService {
         return "Camionero guardado con exito";
     }
 
+    @Override
     public String GuardarCamionero_BM(ArrayList<Camionero> lista_datos) {
         BufferedWriter bw;
         try {
-            bw = new BufferedWriter(new FileWriter(archivo));
+            bw = new BufferedWriter(new FileWriter(archivoCamioneros));
             for (int i = 0; i < lista_datos.size();i++){
                 String datos = lista_datos.get(i).toString();
                 bw.write(datos + "\n");
@@ -100,11 +101,25 @@ public class ImplServicios implements DatosService {
     }
 
     @Override
+    public String BajaCamionerosId(int id){
+        BufferedWriter bw;
+        datos = (ArrayList<Camionero>) this.ListarCamioneros();
+        for (int i = 0; i < datos.size(); i++){
+            if(datos.get(i).getid() == id){
+                datos.remove(i);
+                break;
+            }
+        }
+        this.GuardarCamionero_BM(datos);
+        return "Camionero dado de baja";
+    }
+
+    @Override
     public String ModificacionCamioneros(Camionero nombre, Camionero modificado) {
         this.datos = (ArrayList<Camionero>) this.ListarCamioneros();
         Camionero antiguo = new Camionero();
         for (int i = 0; i < datos.size(); i++){
-            if(datos.get(i).getNombre().equals(nombre.getNombre())){
+            if(datos.get(i).getid() == nombre.getid()){
                 antiguo = datos.get(i);
                 datos.get(i).setNombre(modificado.getNombre());
                 datos.get(i).setApellidos(modificado.getApellidos());
@@ -122,6 +137,7 @@ public class ImplServicios implements DatosService {
         return "Camionero modificado";
     }
 
+    @Override
     public List<Camionero> BusquedaCamionerosrepes(String nombre) {
         List<Camionero> repes = new ArrayList();
         BufferedWriter bw;
@@ -131,11 +147,34 @@ public class ImplServicios implements DatosService {
                 repes.add(datos.get(i));
             }
         }
-        for (int j = 1; j < repes.size(); j++){
-            if (repes.get(0).getNombre().equals(repes.get(j).getNombre())){
-                break;
-            }
-        }
         return repes;
     }
+
+    @Override
+    public List<String> RegistroOperaciones() {
+        List<String> ListaLog = new ArrayList();
+        FileReader fr = null;
+        BufferedReader br = null;
+        String contenido;
+        try {
+            fr = new FileReader(archivoLog);
+            br = new BufferedReader(fr);
+            while ((contenido = br.readLine()) != null) {
+                ListaLog.add(new String(contenido));
+            }
+        } catch (FileNotFoundException e) {
+            trazasComponent.errores("Archivo no encontrado");
+        } catch (IOException e) {
+            trazasComponent.errores("Lectura del Archivo incorrecta");
+        } finally {
+            try {
+                fr.close();
+                br.close();
+            } catch (IOException e) {
+                trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader de la lectura del registro");
+            }
+        }
+        return ListaLog;
+    }
+
 }
