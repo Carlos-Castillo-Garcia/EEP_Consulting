@@ -1,7 +1,9 @@
 package com.eep.EEP_Consulting.Service;
 
 import com.eep.EEP_Consulting.Model.Camionero;
+import com.eep.EEP_Consulting.Model.Registro;
 
+import javax.print.DocFlavor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,5 +17,5 @@ public interface DatosService {
     public abstract String GuardarCamionero_BM(ArrayList<Camionero> lista_datos);
     public abstract String BajaCamionerosId(int id);
     public abstract List<Camionero> BusquedaCamionerosrepes(String nombre);
-    public abstract List RegistroOperaciones();
+    public abstract List<Registro> RegistroOperaciones();
 }

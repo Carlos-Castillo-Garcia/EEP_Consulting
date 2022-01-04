@@ -13,12 +13,13 @@
                 <tr>
                     <th>Hora</th>
                     <th>Operacion</th>
-                    <th>Error</th>
+                    <th>Log</th>
                 </tr>
                 </thead>
                 <tr th:each="i : ${registro}">
-                    <td><span style="text-align: center" th:text="*{i.nombre}"></span></td>
-                    <td><span style="text-align: center" th:text="*{i.apellidos}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.hora}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.operacion}"></span></td>
+                    <td><span style="text-align: center" th:text="*{i.log}"></span></td>
                 </tr>
             </table>
         </div>

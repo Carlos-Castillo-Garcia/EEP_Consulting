@@ -1,6 +1,6 @@
 package com.eep.EEP_Consulting.Component;
 
-import com.eep.EEP_Consulting.Model.Camionero;
+import com.eep.EEP_Consulting.Model.Registro;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Component;
@@ -9,26 +9,21 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Component("TrazasComponent")
 public class TrazasComponent {
     private static final Log LOG = LogFactory.getLog(TrazasComponent.class);
+    private static final File archivoLog = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
+    Registro texto = null;
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-    public void test(List<Camionero> test){
-        for (int i = 0; i < test.size(); i++){
-            System.out.println(test.get(i).getNombre() + test.get(i).getApellidos()+ test.get(i).getCorreo_electronico()+
-                    test.get(i).getNumero_telefono()+test.get(i).getFecha_nacimiento()+ test.get(i).getGenero()+
-                    test.get(i).getTransporte()+ test.get(i).getComentarios()+ test.get(i).getContratado());
-        }
-    }
-
-    public String errores(String texto){
-        File log = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
+    public String errores(String operacion, String log){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
-            bw.write("\n"+texto);
-
+            BufferedWriter bw = new BufferedWriter(new FileWriter(archivoLog, true));
+            texto = new Registro(dtf.format(LocalDateTime.now()), operacion, log);
+            bw.write("\n"+ texto);
             try{
                 bw.close();
             } catch (IOException e) {
@@ -37,16 +32,15 @@ public class TrazasComponent {
         } catch (IOException e) {
             LOG.error("Error en la creacion del BufferWriter de los log");
         }
-        LOG.error(texto);
-        return texto;
+        LOG.error(texto.toString());
+        return texto.toString();
     }
 
-    public String info(String texto){
-        File log = new File("src\\main\\java\\com\\eep\\EEP_Consulting\\Repository\\Log_errores.txt");
+    public String info(String operacion, String log){
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
-            bw.write("\n"+texto);
-
+            BufferedWriter bw = new BufferedWriter(new FileWriter(archivoLog, true));
+            texto = new Registro(dtf.format(LocalDateTime.now()), operacion, log);
+            bw.write("\n"+ texto);
             try{
                 bw.close();
             } catch (IOException e) {
@@ -55,7 +49,7 @@ public class TrazasComponent {
         } catch (IOException e) {
             LOG.info("Error en la creacion del BufferWriter de los log");
         }
-        LOG.info(texto);
-        return texto;
+        LOG.info(texto.toString());
+        return texto.toString();
     }
 }

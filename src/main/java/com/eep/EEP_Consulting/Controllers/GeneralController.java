@@ -18,7 +18,6 @@ import java.util.ArrayList;
 public class GeneralController {
 
     final String ALTA = "alta";
-    final String BAJA = "baja";
     final String MODIF = "modificacion";
     final String REGISTRO = "registro";
     final String MENSAJE = "mensaje_usuarios";
@@ -32,10 +31,6 @@ public class GeneralController {
     @Autowired
     @Qualifier("ServiciosDatos")
     private ImplServicios servicio;
-
-    @Autowired
-    @Qualifier("TrazasComponent")
-    private TrazasComponent componente;
 
     @GetMapping("/listado")
     public String listado(Model model) throws FileNotFoundException {
@@ -112,7 +107,7 @@ public class GeneralController {
         return MENSAJE;
     }
 
-    @PostMapping("/registro")
+    @GetMapping("/registro")
     public String registro(Model model){
         model.addAttribute("registro", servicio.RegistroOperaciones());
         return REGISTRO;

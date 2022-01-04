@@ -2,6 +2,7 @@ package com.eep.EEP_Consulting.impl;
 
 import com.eep.EEP_Consulting.Component.TrazasComponent;
 import com.eep.EEP_Consulting.Model.Camionero;
+import com.eep.EEP_Consulting.Model.Registro;
 import com.eep.EEP_Consulting.Service.DatosService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,17 +38,18 @@ public class ImplServicios implements DatosService {
                 camionerolist.add(test);
             }
         } catch (FileNotFoundException e) {
-            trazasComponent.errores("Archivo no encontrado");
+            trazasComponent.errores("Listado Camioneros", "Archivo no encontrado");
         } catch (IOException e) {
-            trazasComponent.errores("Lectura del Archivo incorrecta");
+            trazasComponent.errores("Listado Camioneros","Lectura del Archivo incorrecta");
         } finally {
             try {
                 fr.close();
                 br.close();
             } catch (IOException e) {
-                trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader de la lectura de los Camioneros");
+                trazasComponent.errores("Listado Camioneros","Error en el cierre del BufferWriter y el FileReader de la lectura de los Camioneros");
             }
         }
+        trazasComponent.info("Listado Camioneros", "Listado correcto");
         return camionerolist;
     }
 
@@ -63,10 +65,15 @@ public class ImplServicios implements DatosService {
                 String datos = lista_datos.get(i).toString();
                 bw.write(datos + "\n");
             }
-            bw.close();
+            try {
+                bw.close();
+            } catch (IOException e) {
+                trazasComponent.errores("Guardado de Camioneros", "Error en el cierre del BufferWriter del guardado de los Camioneros");
+            }
         } catch (IOException e) {
-            trazasComponent.errores("Error en el creado del BufferWriter del guardado de los Camioneros");
+            trazasComponent.errores("Guardado de Camioneros","Error en el creado del BufferWriter del guardado de los Camioneros");
         }
+        trazasComponent.info("Guardado de Camioneros", "Guardado Correcto");
         return "Camionero guardado con exito";
     }
 
@@ -81,23 +88,29 @@ public class ImplServicios implements DatosService {
             }
             bw.close();
         } catch (IOException e) {
-            trazasComponent.errores("Error en el creado del BufferWriter del guardado de los Camioneros");
+            trazasComponent.errores("Guardado de Camioneros en Borrado o Modificacion","Error en el creado del BufferWriter del guardado de los Camioneros");
         }
+        trazasComponent.info("Guardado de Camioneros en Borrado o Modificacion", "Guardado correcto");
         return "Camionero guardado con exito";
     }
 
     @Override
     public String BajaCamioneros(String nombre) {
         BufferedWriter bw;
+        String mensaje = null;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
         for (int i = 0; i < datos.size(); i++){
             if(datos.get(i).getNombre().equals(nombre)){
                 datos.remove(i);
+                mensaje = "Camionero dado de baja";
                 break;
+            }else{
+                mensaje = "No se ha encontrado ningun camionero con ese nombre.";
             }
         }
         this.GuardarCamionero_BM(datos);
-        return "Camionero dado de baja";
+        trazasComponent.info("Baja de Camioneros", "Camionero dado de baja correctamente");
+        return mensaje;
     }
 
     @Override
@@ -151,8 +164,8 @@ public class ImplServicios implements DatosService {
     }
 
     @Override
-    public List<String> RegistroOperaciones() {
-        List<String> ListaLog = new ArrayList();
+    public List<Registro> RegistroOperaciones() {
+        List<Registro> ListaLog = new ArrayList();
         FileReader fr = null;
         BufferedReader br = null;
         String contenido;
@@ -160,21 +173,22 @@ public class ImplServicios implements DatosService {
             fr = new FileReader(archivoLog);
             br = new BufferedReader(fr);
             while ((contenido = br.readLine()) != null) {
-                ListaLog.add(new String(contenido));
+                String[] logs = contenido.split("#");
+                Registro log = new Registro(logs[0], logs[1], logs[2]);
+                ListaLog.add(log);
             }
         } catch (FileNotFoundException e) {
-            trazasComponent.errores("Archivo no encontrado");
+            trazasComponent.errores("Listado Camioneros","Archivo no encontrado");
         } catch (IOException e) {
-            trazasComponent.errores("Lectura del Archivo incorrecta");
+            trazasComponent.errores("Listado Camioneros","Lectura del Archivo incorrecta");
         } finally {
             try {
                 fr.close();
                 br.close();
             } catch (IOException e) {
-                trazasComponent.errores("Error en el cierre del BufferWriter y el FileReader de la lectura del registro");
+                trazasComponent.errores("Listado Camioneros","Error en el cierre del BufferWriter y el FileReader de la lectura del registro");
             }
         }
         return ListaLog;
     }
-
 }
