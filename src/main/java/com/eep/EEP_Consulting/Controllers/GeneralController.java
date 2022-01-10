@@ -25,6 +25,7 @@ public class GeneralController {
     final String LIST_BUSQUEDA = "listado_busqueda";
     final String BUSQUEDA = "busqueda";
     String nombre_busqueda = "";
+    String apellido_busqueda = "";
     String eleccion_busqueda = "";
     Camionero camionero_busqueda = new Camionero();
 
@@ -40,7 +41,7 @@ public class GeneralController {
 
     @PostMapping("/postlistado")
     public String postlistado(@RequestParam(value = "seleccion") int seleccion, Model model){
-        ArrayList<Camionero> listado = (ArrayList<Camionero>) servicio.BusquedaCamionerosrepes(nombre_busqueda);
+        ArrayList<Camionero> listado = (ArrayList<Camionero>) servicio.BusquedaCamionerosrepes(nombre_busqueda, apellido_busqueda);
         camionero_busqueda = listado.get(seleccion);
         if(eleccion_busqueda.equals("true")){
             model.addAttribute("mensaje", servicio.BajaCamionerosId(camionero_busqueda.getid()));
@@ -54,30 +55,38 @@ public class GeneralController {
     }
 
     @GetMapping("/busqueda")
-    public String busqueda_camioneros(){
+    public String busqueda_camioneros(Model model){
+        model.addAttribute("camionero", new Camionero());
         return BUSQUEDA;
     }
 
     @PostMapping("/busqueda")
-    public String posbusqueda(@RequestParam(value = "eleccion") String eleccion, @RequestParam(value = "busqueda") String nombre, Model model){
+    public String posbusqueda(@RequestParam(value = "eleccion") String eleccion, @Validated Camionero busqueda, BindingResult result, Model model){
+        String mensaje = "";
         eleccion_busqueda = eleccion;
-        nombre_busqueda = nombre;
-        if(servicio.BusquedaCamionerosrepes(nombre).size() > 1){
-            model.addAttribute("Camionero", servicio.BusquedaCamionerosrepes(nombre));
-            return LIST_BUSQUEDA;
-        }else{
-            if(eleccion.equals("true")){
-                model.addAttribute("mensaje", servicio.BajaCamioneros(nombre));
-                return MENSAJE;
-            }else if(eleccion.equals("false")){
-                nombre_busqueda = servicio.BusquedaCamionerosrepes(nombre).get(0).getNombre();
-                camionero_busqueda = servicio.BusquedaCamionerosrepes(nombre).get(0);
-                model.addAttribute("mods", new Camionero());
-                model.addAttribute("valoresTransporte", Transportes.values());
-                return MODIF;
+        nombre_busqueda = busqueda.getNombre();
+        apellido_busqueda = busqueda.getApellidos();
+        if(result.hasFieldErrors("nombre") && result.hasFieldErrors("apellidos")){
+            return BUSQUEDA;
+        }else {
+            if(servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).size() > 1){
+                model.addAttribute("Camionero", servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()));
+                return LIST_BUSQUEDA;
+            }else if(servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).size() > 0){
+                if(eleccion.equals("true")){
+                    model.addAttribute("mensaje", servicio.BajaCamioneros(busqueda.getNombre(), busqueda.getApellidos()));
+                    return MENSAJE;
+                }else if(eleccion.equals("false")){
+                    nombre_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0).getNombre();
+                    apellido_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0).getApellidos();
+                    camionero_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0);
+                    model.addAttribute("mods", new Camionero());
+                    model.addAttribute("valoresTransporte", Transportes.values());
+                    return MODIF;
+                }
             }
         }
-        model.addAttribute("mensaje", "Selecciona una de las opciones e introduce un nombre a buscar");
+        model.addAttribute("mensaje", "No se ha encontrado ningun Camionero con ese nombre o apellidos");
         return MENSAJE;
     }
 

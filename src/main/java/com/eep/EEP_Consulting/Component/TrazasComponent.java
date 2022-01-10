@@ -23,7 +23,7 @@ public class TrazasComponent {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(archivoLog, true));
             texto = new Registro(dtf.format(LocalDateTime.now()), operacion, log);
-            bw.write("\n"+ texto);
+            bw.write(texto + "\n");
             try{
                 bw.close();
             } catch (IOException e) {
@@ -40,7 +40,7 @@ public class TrazasComponent {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(archivoLog, true));
             texto = new Registro(dtf.format(LocalDateTime.now()), operacion, log);
-            bw.write("\n"+ texto);
+            bw.write(texto + "\n");
             try{
                 bw.close();
             } catch (IOException e) {

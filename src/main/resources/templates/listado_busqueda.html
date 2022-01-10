@@ -2,15 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link th:href="@{../static/css/bootstrap.min.css}" rel="stylesheet" type="text/css">
+    <title>EEP CONSULTIN</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="../static/css/estilos.css" rel="stylesheet" th:href="@{/css/estilos.css}"/>
 </head>
-<body>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <form action="#" th:action="@{/postlistado}" method="post">
-            <table class="table table-dark">
+<body class="vh-100 d-flex flex-column">
+<header>
+    <h1 class="bg-info mb-0 text-center py-2">EEP CONSULTING</h1>
+</header>
+<main class="d-flex h-100">
+    <nav class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="active d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#bootstrap"/>
+            </svg>
+            <span class="fs-4">Operaciones Camioner@s</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="/alta" class="nav-link text-white" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"/>
+                    </svg>
+                    Alta
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"/>
+                    </svg>
+                    Baja
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#table"/>
+                    </svg>
+                    Modificacion
+                </a>
+            </li>
+            <li>
+                <a href="/listado" class="nav-link active text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#grid"/>
+                    </svg>
+                    Listado
+                </a>
+            </li>
+            <li>
+                <a href="/registro" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#people-circle"/>
+                    </svg>
+                    Registro
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="color-mods h-100 w-100">
+        <form action="#" th:action="@{/postlistado}" method="post">
+            <table class="table table-striped color-tabla">
                 <thead>
                 <tr>
                     <th>Nombre</th>
@@ -38,13 +92,13 @@
                     <td><input type="radio" th:value="${iterator.index}" th:name="seleccion"></td>
                 </tr>
             </table>
-                <p><input type="submit" value="Submit"></p>
-            </form>
-        </div>
+            <input type="submit">
+        </form>
     </div>
-</div>
-<script th:src="@{../static/js/jquery-3.6.0.min.js}"></script>
-<script th:src="@{../static/js/popper.min.js}"></script>
-<script th:src="@{../static/js/bootstrap.min.js}"></script>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>
 </html>
+
+

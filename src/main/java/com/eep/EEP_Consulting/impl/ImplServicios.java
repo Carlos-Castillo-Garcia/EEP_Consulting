@@ -55,15 +55,20 @@ public class ImplServicios implements DatosService {
 
     @Override
     public String GuardarCamionero(ArrayList<Camionero> lista_datos) {
-        BufferedWriter bw;
+        BufferedWriter bw = null;
         int ultimo_id = ListarCamioneros().get(ListarCamioneros().size() - 1).getid();
         int nuevo_id = ultimo_id+1;
         lista_datos.get(0).setId(nuevo_id);
         try {
-            bw = new BufferedWriter(new FileWriter(archivoCamioneros, true));
-            for (int i = 0; i < lista_datos.size();i++){
-                String datos = lista_datos.get(i).toString();
-                bw.write(datos + "\n");
+            if(lista_datos.size()>0) {
+                bw = new BufferedWriter(new FileWriter(archivoCamioneros, true));
+                for (int i = 0; i < lista_datos.size(); i++) {
+                    lista_datos.get(i).setNumero_telefono("+34"+lista_datos.get(i).getNumero_telefono());
+                    String datos = lista_datos.get(i).toString();
+                    bw.write(datos + "\n");
+                }
+            }else{
+                trazasComponent.errores("Guardado de Camioneros", "No hay ningun camionero a guardar");
             }
             try {
                 bw.close();
@@ -79,12 +84,17 @@ public class ImplServicios implements DatosService {
 
     @Override
     public String GuardarCamionero_BM(ArrayList<Camionero> lista_datos) {
-        BufferedWriter bw;
+        BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new FileWriter(archivoCamioneros));
-            for (int i = 0; i < lista_datos.size();i++){
-                String datos = lista_datos.get(i).toString();
-                bw.write(datos + "\n");
+            if(lista_datos.size()>0) {
+                bw = new BufferedWriter(new FileWriter(archivoCamioneros));
+                for (int i = 0; i < lista_datos.size(); i++) {
+                    lista_datos.get(i).setNumero_telefono("+34"+lista_datos.get(i).getNumero_telefono());
+                    String datos = lista_datos.get(i).toString();
+                    bw.write(datos + "\n");
+                }
+            }else{
+                trazasComponent.errores("Guardado de Camioneros en Borrado o Modificacion", "No hay ningun camionero a guardar");
             }
             bw.close();
         } catch (IOException e) {
@@ -95,7 +105,7 @@ public class ImplServicios implements DatosService {
     }
 
     @Override
-    public String BajaCamioneros(String nombre) {
+    public String BajaCamioneros(String nombre, String apellidos) {
         BufferedWriter bw;
         String mensaje = null;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
@@ -116,21 +126,27 @@ public class ImplServicios implements DatosService {
     @Override
     public String BajaCamionerosId(int id){
         BufferedWriter bw;
+        String mensaje = null;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
         for (int i = 0; i < datos.size(); i++){
             if(datos.get(i).getid() == id){
                 datos.remove(i);
+                mensaje = "Camionero dado de baja";
                 break;
+            }else {
+                mensaje = "No se ha encontrado ningun camionero con ese nombre.";
             }
         }
         this.GuardarCamionero_BM(datos);
-        return "Camionero dado de baja";
+        trazasComponent.info("Baja de Camioneros", "Camionero dado de baja correctamente");
+        return mensaje;
     }
 
     @Override
     public String ModificacionCamioneros(Camionero nombre, Camionero modificado) {
         this.datos = (ArrayList<Camionero>) this.ListarCamioneros();
         Camionero antiguo = new Camionero();
+        String mensaje = null;
         for (int i = 0; i < datos.size(); i++){
             if(datos.get(i).getid() == nombre.getid()){
                 antiguo = datos.get(i);
@@ -143,23 +159,29 @@ public class ImplServicios implements DatosService {
                 datos.get(i).setTransporte(modificado.getTransporte());
                 datos.get(i).setComentarios(modificado.getComentarios());
                 datos.get(i).setContratado(modificado.getContratado());
+                mensaje = "Camionero modificado correctamente";
                 break;
+            }else{
+                mensaje = "No se ha encontrado ningun camionero";
+                trazasComponent.errores("Modificacion de Camioneros", "No se encontro ningun camionero a modificar");
             }
         }
         this.GuardarCamionero_BM(datos);
-        return "Camionero modificado";
+        trazasComponent.info("Modificacion de Camioneros", "Camionero modificado correctamente " + antiguo.toString());
+        return mensaje;
     }
 
     @Override
-    public List<Camionero> BusquedaCamionerosrepes(String nombre) {
+    public List<Camionero> BusquedaCamionerosrepes(String nombre, String apellidos) {
         List<Camionero> repes = new ArrayList();
         BufferedWriter bw;
         datos = (ArrayList<Camionero>) this.ListarCamioneros();
         for (int i = 0; i < datos.size(); i++){
-            if(datos.get(i).getNombre().equals(nombre)){
+            if(datos.get(i).getNombre().equals(nombre) || datos.get(i).getApellidos().equals(apellidos)){
                 repes.add(datos.get(i));
             }
         }
+        trazasComponent.info("Busqueda de Camioneros", "Camioneros encontrado");
         return repes;
     }
 
@@ -178,17 +200,18 @@ public class ImplServicios implements DatosService {
                 ListaLog.add(log);
             }
         } catch (FileNotFoundException e) {
-            trazasComponent.errores("Listado Camioneros","Archivo no encontrado");
+            trazasComponent.errores("Registro de Operaciones","Archivo no encontrado");
         } catch (IOException e) {
-            trazasComponent.errores("Listado Camioneros","Lectura del Archivo incorrecta");
+            trazasComponent.errores("Registro de Operaciones","Lectura del Archivo incorrecta");
         } finally {
             try {
                 fr.close();
                 br.close();
             } catch (IOException e) {
-                trazasComponent.errores("Listado Camioneros","Error en el cierre del BufferWriter y el FileReader de la lectura del registro");
+                trazasComponent.errores("Registro de Operaciones","Error en el cierre del BufferWriter y el FileReader de la lectura del registro");
             }
         }
+        trazasComponent.info("Registro de Operaciones", "Registro de Operacion obtenido correctamente");
         return ListaLog;
     }
 }

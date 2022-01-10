@@ -2,27 +2,174 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>EEP CONSULTIN</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="../static/css/estilos.css" rel="stylesheet" th:href="@{/css/estilos.css}"/>
 </head>
-<body>
-<h2>Campos a modificar</h2>
-<form action="#" th:action="@{/mesajemods}" th:object="${mods}" method="post">
-    <p>Nombre: <input type="text" th:field="*{nombre}"/></p>
-    <p>Apellidos: <input type="text" th:field="*{apellidos}"/></p>
-    <p>Correo electronico: <input type="text" th:field="*{correo_electronico}"/></p>
-    <p>Numero de Telefono: <input type="number" th:field="*{numero_telefono}"></p>
-    <p>Fecha de Nacimiento: <input type="date" format="yyyy-MM-dd" th:field="*{fecha_nacimiento}"/></p>
-    <p>Genero: Hombre<input type="radio" value="Hombre" th:field="*{genero}"/>
-        Mujer<input type="radio" value="Mujer" th:field="*{genero}"/></p>
-    <div>
-        <select th:field="*{transporte}">
-            <option th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
-        </select>
+<body class="vh-100 d-flex flex-column">
+<header>
+    <h1 class="bg-info mb-0 text-center py-2">EEP CONSULTING</h1>
+</header>
+<main class="d-flex h-100">
+    <nav class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="active d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            <span class="fs-4">Operaciones Camioner@s</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="/alta" class="nav-link text-white" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#home"/>
+                    </svg>
+                    Alta
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#speedometer2"/>
+                    </svg>
+                    Baja
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link text-white active">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#table"/>
+                    </svg>
+                    Modificacion
+                </a>
+            </li>
+            <li>
+                <a href="/listado" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#grid"/>
+                    </svg>
+                    Listado
+                </a>
+            </li>
+            <li>
+                <a href="/registro" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16">
+                        <use xlink:href="#people-circle"/>
+                    </svg>
+                    Registro
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="color-mods h-100 w-100">
+        <form class="m-1" action="#" th:action="@{/mensajealta}" th:object="${camionero}" method="post">
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="nombre" class="col-form-label">Nombre:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="nombre" class="form-control" type="text" th:field="*{nombre}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="apellidos" class="col-form-label">Apellidos:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="apellidos" class="form-control" type="text" th:field="*{apellidos}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="correo_electronico" class="col-form-label">Correo Electronico:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="correo_electronico" class="form-control" type="text" th:field="*{correo_electronico}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('correo_electronico')}" th:errors="*{correo_electronico}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="numero_telefono" class="col-form-label">Numero Telefono:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="numero_telefono" class="form-control" type="text" th:field="*{numero_telefono}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('numero_telefono')}" th:errors="*{numero_telefono}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="fecha_nacimiento" class="col-form-label">Fecha Nacimiento:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="fecha_nacimiento" class="form-control" type="date" th:field="*{fecha_nacimiento}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('fecha_nacimiento')}" th:errors="*{fecha_nacimiento}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="genero" class="col-form-label">Genero:</label>
+                </div>
+                <div class="col-auto">
+                    Hombre <input id="genero" type="radio" value="Hombre" th:field="*{genero}"/>
+                    Mujer  <input id="genero" type="radio" value="Mujer" th:field="*{genero}"/>
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('genero')}" th:errors="*{genero}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="transporte" class="col-form-label">Transporte:</label>
+                </div>
+                <div class="col-auto">
+                    <select th:field="*{transporte}">
+                        <option id="transporte" th:each="i : ${valoresTransporte}" th:value="${i}" th:text="${i}"></option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('transporte')}" th:errors="*{transporte}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="contratado" class="col-form-label">Contratado:</label>
+                </div>
+                <div class="col-auto">
+                    Si <input id="contratado" type="radio" value="true" th:field="*{contratado}"/>
+                    No <input id="contratado" type="radio" value="false" th:field="*{contratado}"/>
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('contratado')}" th:errors="*{contratado}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="comentarios" class="col-form-label">Comentarios:</label>
+                </div>
+                <div class="col-auto">
+                    <textarea id="comentarios" th:field="*{comentarios}"></textarea>
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('comentarios')}" th:errors="*{comentarios}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
     </div>
-    <p>Contratado: Si<input type="radio" value="true" th:field="*{contratado}"/>
-        No<input type="radio" value="false" th:field="*{contratado}"/></p>
-    <p><textarea th:field="*{comentarios}"></textarea></p>
-    <p><input type="submit" value="Submit"/></p>
-</form>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>
 </html>

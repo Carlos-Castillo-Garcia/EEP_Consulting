@@ -7,11 +7,11 @@ public class Camionero {
     int id;
 
     @NotEmpty(message = "El nombre no puede estar vacio")
-    @Size(min = 5, message = "debe tener mas de 20 caracteres")
+    @Size(max = 20, message = "no debe tener mas de 20 caracteres")
     String nombre;
 
     @NotEmpty(message = "El apellido no puede estar vacio")
-    @Size(min = 10, message = "debe tener mas de 40 caracteres")
+    @Size(max = 40, message = "no debe tener mas de 40 caracteres")
     String apellidos;
 
     @NotEmpty(message = "El correo no puede estar vacio")
@@ -19,7 +19,7 @@ public class Camionero {
     String correo_electronico;
 
     @NotEmpty(message = "El numero de telefono no puede estar vacio")
-    @Size(min = 9, max = 9, message = "debe tener como maximo y como minimo 9 caracteres")
+    @Size(min = 9, max = 9, message = "Debe tener como maximo y como minimo 9 caracteres")
     String numero_telefono;
 
     @NotEmpty(message = "La fecha de nacimiento no puede estar vacio")

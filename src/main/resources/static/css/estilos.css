@@ -1,0 +1,18 @@
+.color-tabla{
+    background-color: #D0D7DE ;
+}
+.color-mods{
+    background-color: #CFD2D5 ;
+}
+.tabla{
+    overflow: scroll;
+}
+.headth{
+    position: sticky;
+    top: 0;
+    left: 0;
+    background-color: #D0D7DE;
+}
+main{
+    max-height: calc(100% - 64px);
+}

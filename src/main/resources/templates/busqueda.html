@@ -2,15 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>EEP CONSULTIN</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link href="../static/css/estilos.css" rel="stylesheet" th:href="@{/css/estilos.css}"/>
 </head>
-<body>
-    <h1>Busque de Camioneros</h1>
-    <form action="#" th:action="@{/busqueda}" method="post">
-        <p>Nombre: <input type="text" th:name="busqueda"/></p>
-        <p>Dar de baja un camionero<input type="radio" value="true" th:name="eleccion"/> <br>
-           Modificar un camionero <input type="radio" value="false" th:name="eleccion"/></p>
-        <p><input type="submit" value="Submit"/></p>
-    </form>
+<body class="vh-100 d-flex flex-column">
+<header>
+    <h1 class="bg-info mb-0 text-center py-2">EEP CONSULTING</h1>
+</header>
+<main class="d-flex h-100">
+    <nav class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <a href="/" class="active d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
+            <span class="fs-4">Operaciones Camioner@s</span>
+        </a>
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a href="/alta" class="nav-link text-white" aria-current="page">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                    Alta
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link active text-white">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
+                    Baja
+                </a>
+            </li>
+            <li>
+                <a href="/busqueda" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                    Modificacion
+                </a>
+            </li>
+            <li>
+                <a href="/listado" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                    Listado
+                </a>
+            </li>
+            <li>
+                <a href="/registro" class="nav-link text-white">
+                    <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                    Registro
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="color-mods h-100 w-100">
+        <form action="#" th:action="@{/busqueda}" th:object="${camionero}" method="post">
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="nombre" class="col-form-label">Nombre:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="nombre" class="form-control" type="text" th:field="*{nombre}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="apellidos" class="col-form-label">Apellidos:</label>
+                </div>
+                <div class="col-auto">
+                    <input id="apellidos" class="form-control" type="text" th:field="*{apellidos}">
+                </div>
+                <div class="col-auto">
+                    <span th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" style="color: red"></span><br/>
+                </div>
+            </div>
+            <div class="mb-1 row g-3 align-items-center">
+                <div class="col-auto">
+                    <label for="opcion" class="col-form-label">Opcion:</label>
+                </div>
+                <div class="col-auto">
+                    Dar de baja un camionero <input id="opcion" type="radio" value="true" th:name="eleccion" checked/><br>
+                    Modificar un camionero   <input id="opcion" type="radio" value="false" th:name="eleccion"/>
+                </div>
+            </div>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </div>
+</main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.js" th:href="@{/js/bootstrap.js}"></script>
 </body>
 </html>
