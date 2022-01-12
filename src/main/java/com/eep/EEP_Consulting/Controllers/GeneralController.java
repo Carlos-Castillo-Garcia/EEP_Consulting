@@ -1,6 +1,5 @@
 package com.eep.EEP_Consulting.Controllers;
 
-import com.eep.EEP_Consulting.Component.TrazasComponent;
 import com.eep.EEP_Consulting.Model.Camionero;
 import com.eep.EEP_Consulting.Model.Transportes;
 import com.eep.EEP_Consulting.impl.ImplServicios;
@@ -47,7 +46,7 @@ public class GeneralController {
             model.addAttribute("mensaje", servicio.BajaCamionerosId(camionero_busqueda.getid()));
             return MENSAJE;
         }else if(eleccion_busqueda.equals("false")){
-            model.addAttribute("mods", new Camionero());
+            model.addAttribute("camionero", camionero_busqueda);
             model.addAttribute("valoresTransporte", Transportes.values());
             return MODIF;
         }
@@ -80,7 +79,7 @@ public class GeneralController {
                     nombre_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0).getNombre();
                     apellido_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0).getApellidos();
                     camionero_busqueda = servicio.BusquedaCamionerosrepes(busqueda.getNombre(), busqueda.getApellidos()).get(0);
-                    model.addAttribute("mods", new Camionero());
+                    model.addAttribute("camionero", camionero_busqueda);
                     model.addAttribute("valoresTransporte", Transportes.values());
                     return MODIF;
                 }

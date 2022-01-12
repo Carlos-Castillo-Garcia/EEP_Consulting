@@ -148,7 +148,22 @@ public class Camionero {
         sb.append(genero).append("#");
         sb.append(transporte).append("#");
         sb.append(comentarios).append("#");
-        sb.append(contratado).append("#");
+        sb.append(contratado);
+        return sb.toString();
+    }
+
+    public String toStringMod() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(id).append(", ");
+        sb.append(nombre).append(", ");
+        sb.append(apellidos).append(", ");
+        sb.append(correo_electronico).append(", ");
+        sb.append(numero_telefono).append(", ");
+        sb.append(fecha_nacimiento).append(", ");
+        sb.append(genero).append(", ");
+        sb.append(transporte).append(", ");
+        sb.append(comentarios).append(", ");
+        sb.append(contratado);
         return sb.toString();
     }
 }

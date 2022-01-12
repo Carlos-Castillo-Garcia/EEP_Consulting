@@ -56,8 +56,15 @@ public class ImplServicios implements DatosService {
     @Override
     public String GuardarCamionero(ArrayList<Camionero> lista_datos) {
         BufferedWriter bw = null;
-        int ultimo_id = ListarCamioneros().get(ListarCamioneros().size() - 1).getid();
-        int nuevo_id = ultimo_id+1;
+        int ultimo_id;
+        int nuevo_id;
+        if(ListarCamioneros().size()>0){
+            ultimo_id = ListarCamioneros().get(ListarCamioneros().size() - 1).getid();
+            nuevo_id = ultimo_id+1;
+        }else{
+            nuevo_id = 1;
+        }
+
         lista_datos.get(0).setId(nuevo_id);
         try {
             if(lista_datos.size()>0) {
@@ -89,7 +96,9 @@ public class ImplServicios implements DatosService {
             if(lista_datos.size()>0) {
                 bw = new BufferedWriter(new FileWriter(archivoCamioneros));
                 for (int i = 0; i < lista_datos.size(); i++) {
-                    lista_datos.get(i).setNumero_telefono("+34"+lista_datos.get(i).getNumero_telefono());
+                    if(!lista_datos.get(i).getNumero_telefono().substring(0,3).equals("+34")){
+                        lista_datos.get(i).setNumero_telefono("+34"+lista_datos.get(i).getNumero_telefono());
+                    }
                     String datos = lista_datos.get(i).toString();
                     bw.write(datos + "\n");
                 }
@@ -167,7 +176,7 @@ public class ImplServicios implements DatosService {
             }
         }
         this.GuardarCamionero_BM(datos);
-        trazasComponent.info("Modificacion de Camioneros", "Camionero modificado correctamente " + antiguo.toString());
+        trazasComponent.info("Modificacion de Camioneros", "Camionero modificado correctamente " + antiguo.toStringMod());
         return mensaje;
     }
 
